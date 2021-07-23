@@ -7,34 +7,37 @@
 ## About
 [Zur Deutschen Version 🇩🇪](#überblick)
 
-The NUM-App is an open source mobile app project for the digital conduct of questionnaire-based studies. The NUM-App is part of [COMPASS](https://num-compass.science/) (Coordination on mobile pandemic apps best practice and solution sharing).
+The NUM-App is an open source project for the digital conduct of questionnaire-based studies. For this, it provides a mobile/native and web app. The NUM-App is part of [COMPASS](https://num-compass.science/) (Coordination on mobile pandemic apps best practice and solution sharing).
 
 The NUM-App enables the display of [FHIR Questionnaires](https://www.hl7.org/fhir/questionnaire.html) as well as the encrypted transmission and storage of corresponding [FHIR Questionnaire Responses](https://www.hl7.org/fhir/questionnaireresponse.html).
 
-
 ## What is special about the NUM-App?
 
-The NUM-App provides a quick and easy way to digitally conduct questionnaire-based studies. Study participants can fill out questionnaires on their mobile device and submit them when done. The study staff can easily retrieve submitted responses and change questionnaires without the need for participants to reinstall the mobile app. Questionnaire responses are always end-to-end encrypted which enables the use of the NUM-App for medical studies. The app is easily customizable and can be adapted to individual requirements. 
+The NUM-App provides a quick and easy way to digitally conduct questionnaire-based studies. Study participants can fill out questionnaires using web browers or mobile devices and submit them when done. The study staff can easily retrieve submitted responses and change questionnaires without the need for participants to reinstall the mobile app. Questionnaire responses are always end-to-end encrypted which enables the use of the NUM-App for medical studies. The app is easily customizable and can be adapted to individual requirements.
 
 The main advantages of the app are:
 
 * **Open Source**: Everybody can use the app and get involved in the development process.
-* **Standard**: The use of the international FHIR standard guarantees the compatability of our app.
+* **Standard**: The use of the international FHIR standard guarantees the compatability of the app.
 * **Community**: The work of our community is guaranteed in the long run, thanks to the subsidy by the [BMBF](https://www.bmbf.de/).
 * **Practical**: Our community is supported by domain and techical experts, as we are a [COMPASS](https://num-compass.science/) project of the [NUM-Network](https://www.netzwerk-universitaetsmedizin.de/).
 * **Simple**: The app can be set up and customized in a short amount of time, even without a deep technical understanding.
 
 ## How to Use
 
-The NUM-App consists of the following three components: 
+The NUM-App consists of the following five components:
 
-1. [Mobile Frontend](https://github.com/NUMde/compass-numapp-frontend): An easy to use mobile app (React Native) that can dynamically render FHIR Questionnaires and display information sections. 
+1. [Mobile Frontend](https://github.com/NUMde/compass-numapp-frontend): An easy to use mobile app (React Native) that can dynamically render FHIR Questionnaires and display information sections.
 
-2. [Mobile Backend (+ Database)](https://github.com/NUMde/compass-numapp-backend): The backend component which provisions FHIR Questionnaires based on a user context and administrates the storage of FHIR Questionnaire Responses.
+2. [Web Frontend](https://github.com/NUMde/compass-numapp-web): An easy to use web application (TypeScript) that can dynamically render FHIR Questionnaires and display information setctions.
 
-3. [Downloader Script](https://github.com/NUMde/compass-numapp-downloader): Use this component to retrieve and decrypt the submitted FHIR Questionnaire Responses.
+3. [Mobile & Web Backend (+ Database)](https://github.com/NUMde/compass-numapp-backend): The backend component which provisions FHIR Questionnaires based on a user context and administrates the storage of FHIR Questionnaire Responses.
 
-You need to set up all these components in order to enable the end-to-end usage flow of the NUM-App including the provisioning of a FHIR Questionnaire, the storage of the corresponding response and its retrieval. 
+4. [Downloader Script](https://github.com/NUMde/compass-numapp-downloader): Use this component to retrieve and decrypt the submitted FHIR Questionnaire Responses.
+
+5. [Conformance Checker](https://github.com/NUMde/compass-num-conformance-checker): If the application is used within the context of a COVID-19 study and produces [GECCO FHIR Ressources](https://simplifier.net/guide/GermanCoronaConsensusDataSet-ImplementationGuide/Home), this component allows to check the respective app's conformance to the defined standard.
+
+You need to set up at least one Frontend, the Backend, and the Downloader Script in order to enable the end-to-end usage flow of the NUM-App including the provisioning of a FHIR Questionnaire, the storage of the corresponding response and its retrieval.
 Refer to the documentation files of the linked repositories for information on setup and configuration.
 
 For general documentation on aspects that are component unspecific (e.g. encryption and forking), refer to the [docs](https://github.com/NUMde/compass-numapp/tree/main/docs).
@@ -46,23 +49,23 @@ Videos of our recorded enabling sessions can be accessed on [YouTube](https://ww
     <img src="assets/componentOverview.png" alt="Component Overview" width="600">
 </p>
 
-## An Illustrative COVID Study Conducted With the NUM-App
+## An Illustrative COVID-19 Study Conducted With the NUM-App
 
-The following example illustrates how you can use the NUM-App to digitally conduct your (clinical) studies. We consider Max who participates in a COVID-19 study at a University Hospital.
+The following example illustrates how you can use the NUM-App to digitally conduct your (clinical) studies. We consider Max who participates in a COVID-19 study at a university hospital.
 
 <img src="assets/studyFlow_EN.png" alt="Visualization Study Flow" width="400" align="right">
 
 ### Step 1 - Login and the first questionnaire
-<div class="block">Max receives a personalized QR-Code from the hospital which he can scan with the NUM-App to log in. He is then presented with a special questionnaire, as it is the first time that he uses the app. The questionnaire includes questions that Max should only answer once. Max completes the questionnaire in one go and submits it. The NUM-App transforms it into a FHIR Questionnaire Response object, encrypts it and transmits it to the mobile backend where it is persisted.</div>
+<div class="block">Max receives a personalized QR-Code from the hospital which he can scan with the NUM-App to log in. He is then presented with a special questionnaire, as it is the first time that he uses the app. The questionnaire includes questions that Max should only answer once. Max completes the questionnaire in one go and submits it. The NUM-App transforms it into a FHIR Questionnaire Response object, encrypts it and transmits it to the backend where it is persisted.</div>
 
 ### Step 2 - Retrieval of questionnaire responses
 <div class="block">The study staff at the university hospital wants to check if new questionnaire responses were submitted. A staff member runs the downloader script and the encrypted response from Max is retrieved and locally decrypted.</div>
 
 ### Step 3 - The standard questionnaire
-The study staff defined a questionnaire frequency of seven days. Therefore, Max receives a new standard questionnaire once a week. When he completes one, the NUM-App shows him the time until the next questionnaire becomes available. As Max is not checking the NUM-App every day, a push notification is sent to him once a new questionaire becomes available. The study staff set the time of the notification to 10:00 AM so Max is reminded once a week at that time. As the questionnaire is quite long, Max doesn't always finish it at once. As the NUM-App saves his answers he can always complete the questionnaire at a later time.
+The study staff defined a questionnaire frequency of seven days. Therefore, Max receives a new standard questionnaire once a week. When he completes one, the NUM-App shows him the time until the next questionnaire becomes available. As Max is not checking the NUM-App every day, a push notification is sent to his mobile application once a new questionaire becomes available. The study staff set the time of the notification to 10:00 AM so Max is reminded once a week at that time. As the questionnaire is quite long, Max doesn't always finish it at once. As the NUM-App saves his answers he can always complete the questionnaire at a later time.
 
 ### Step 4 - Special answers
-At some point in time, Max answers one of the questions with a value that was predefined as a trigger value. In this study this is the information that Max was tested positive for COVID-19. This is detected by the NUM-App. After submission of the questionnaire, Max's profile is automatically adapted based on preconfigured settings. Instead of the standard questionnaire, Max now receives an alternative questionnaire. Also, the questionnaire frequency is increased to once a day and the distribution time of the new questionnaire is set to seven days. That means that Max will receive the new questionnaire daily for one week. After that, the settings are set back to the initial values.
+At some point in time, Max answers one of the questions with a value that was predefined as a _trigger value_. In this study this is the information that Max was tested positive for COVID-19. This is detected by the NUM-App. After submission of the questionnaire, Max's profile is automatically adapted based on preconfigured settings. Instead of the standard questionnaire, Max now receives an alternative questionnaire. Also, the questionnaire frequency is increased to once a day and the distribution time of the new questionnaire is set to seven days. That means that Max will receive the new questionnaire daily for one week. After that, the settings are set back to the initial values.
 
 ### Step 5 - Submission of a special report
 Max is provided the standard questionnaire again. He has already finished most the recent one and has to wait six days for the next to become available. However, one day later he notices COVID-19 symptoms and requests a special report via the app. This again triggers a change of Max's user profile. He will now receive a special questinnaire independent from the regular frequency and can directly report his symptoms via this questionnaire. Afterwards, he will go back to the standard report as not configured otherwise. However, in the meantime the study staff adapted the standard questionnaire frequency to be five days instead of seven, so Max will now receive a questionnaire every five days.
@@ -78,7 +81,16 @@ Gain an impression of our work and take a look at our videos in the [COMPASS You
 
 ### License
 
-The NUM-App components are all licensed under the Apache 2.0 license.
+The NUM-App components are licensed under the Apache 2.0 and MIT licenses:
+
+Apache 2.0
+- [Mobile Frontend](https://github.com/NUMde/compass-numapp-frontend)
+- [Mobile & Web Backend (+ Database)](https://github.com/NUMde/compass-numapp-backend)
+- [Downloader Script](https://github.com/NUMde/compass-numapp-downloader)
+
+MIT
+- [Web Frontend](https://github.com/NUMde/compass-numapp-web)
+- [Conformance Checker](https://github.com/NUMde/compass-num-conformance-checker)
 
 ### Code of Conduct
 
@@ -89,17 +101,17 @@ We follow the code of conduct defined by the [Contributor Convenant](https://www
 ## Überblick
 [To the English version 🇬🇧](#about)
 
-Die NUM-App ist ein Open Source Projekt zur Ermöglichung der digitalen Durchführung von Studien auf Basis von Fragebögen. Die NUM-App ist Teil von [COMPASS](https://num-compass.science/) (Coordination on mobile pandemic apps best practice and solution sharing).
+Die NUM-App ist ein Open Source Projekt zur Ermöglichung der digitalen Durchführung von Studien auf Basis von Fragebögen. Hierzu werden eine Web- sowie Mobile Anwendung bereitgestellt. Die NUM-App ist Teil von [COMPASS](https://num-compass.science/) (Coordination on mobile pandemic apps best practice and solution sharing).
 
 Die NUM-App ermöglicht die Darstellung von [FHIR Questionnaires](https://www.hl7.org/fhir/questionnaire.html) sowie die verschlüsselte Versendung und Speicherung der zugehörigen [FHIR Questionnaire Responses](https://www.hl7.org/fhir/questionnaireresponse.html).
 
 ## Was ist besonders an der NUM-App?
 
-Die NUM-App ermöglicht eine einfache und digitale Durchführung von Studien auf Basis von Fragebögen. Studienteilnehmer können Fragebögen direkt auf ihrem mobilen Endgerät ausfüllen und versenden. Die Studienverantwortlichen können eingereichte Antworten einfach abrufen und Fragebögen aktualisieren, ohne dass Studienteilnehmer die App neu installieren oder updaten müssen. Fragebogenantworten werden per Ende-zu-Ende-Verschlüsselung an die empfangende Institution übermittelt, wodurch die NUM-App auch für medizinische Studien geeignet ist. Die App ist flexibel personalisierbar und kann auch auf eigene Anforderungen angepasst werden.
+Die NUM-App ermöglicht eine einfache und digitale Durchführung von Studien auf Basis von Fragebögen. Studienteilnehmende können Fragebögen direkt auf ihrem mobilen Endgerät oder in einem Webbrowser ausfüllen und versenden. Die Studienverantwortlichen können eingereichte Antworten einfach abrufen und Fragebögen aktualisieren, ohne dass Studienteilnehmende die mobile App neu installieren oder updaten müssen. Fragebogenantworten werden per Ende-zu-Ende-Verschlüsselung an die empfangende Institution übermittelt, wodurch die NUM-App auch für medizinische Studien geeignet ist. Die App ist flexibel personalisierbar und kann auch auf eigene Anforderungen angepasst werden.
 
 Die Hauptvorteile der App sind:
 
-* **Open Source**: Die App kann von jedem genutzt werden und jeder kann sich an der Entwicklung beteiligen.
+* **Open Source**: Die App kann frei genutzt werden und jede:r kann sich an der Entwicklung beteiligen.
 * **Standard**: Durch die Verwendung des internationalen FHIR Standards wird die Kompatibilität der App sichergestellt.
 * **Community**: Dank der Förderung durch das [BMBF](https://www.bmbf.de/) wird die Arbeit unserer Community auch auf lange Sicht sichergestellt.
 * **Praxisnah**: Als [COMPASS](https://num-compass.science/) Projekt des [NUM-Netzwerk](https://www.netzwerk-universitaetsmedizin.de/) wird unsere Community durch Fach- und Technikexperten unterstützt.
@@ -107,17 +119,17 @@ Die Hauptvorteile der App sind:
 
 ## Nutzungshinweis
 
-Die NUM-App umfasst die folgenden drei Komponenten: 
+Die NUM-App umfasst die folgenden fünf Komponenten:
 
-1. [Mobile Frontend](https://github.com/NUMde/compass-numapp-frontend): Eine einfach zu verwendende mobile App (React Native), die FHIR Questionnaires dynamisch darstellen und informative Inhalte anzeigen kann. 
+1. [Mobile Frontend](https://github.com/NUMde/compass-numapp-frontend): Eine einfach zu verwendende mobile App (React Native), die FHIR Questionnaires dynamisch darstellen und informative Inhalte anzeigen kann.
+2. [Web Frontend](https://github.com/NUMde/compass-numapp-web): Eine einfach zu verwendende Webanwendung (Typescribt), die FHIR Questionnaires dynamisch darstellen und informative Inhalte anzeigen kann.
+3. [Mobile & Web Backend (+ Database)](https://github.com/NUMde/compass-numapp-backend): Die Backend Komponente, welche die FHIR Questionnaires auf Basis des Nutzerkontexts bereitstellt und die Speicherung der FHIR Questionnaire Responses verwaltet.
+4. [Downloader Script](https://github.com/NUMde/compass-numapp-downloader): Diese Komponente dient dem Abruf und der Entschlüsselung eingereichter FHIR Questionnaire Responses.
+5. [Konfromitätsprüfer](https://github.com/NUMde/compass-numapp-downloader): Wird die Anwendung im Zusammenhang mit einer COVID-19 Studie verwendet, die [GECCO FHIR Ressourcen](https://simplifier.net/guide/GermanCoronaConsensusDataSet-ImplementationGuide/Home) produziert, ermöglicht diese Komponente eine Überprüfung der Anwendung auf Konformität zum definierten Standard.
 
-2. [Mobile Backend (+ Database)](https://github.com/NUMde/compass-numapp-backend): Die Backend Komponente, welche die FHIR Questionnaires auf Basis des Nutzerkontexts bereitstellt und die Speicherung der FHIR Questionnaire Responses verwaltet.
+Es muss mindestens ein Frontend, das Backend sowie das Downloader Script aufgesetzt werden, um die Verwendung der App in vollem Umfang zu gewährleisten. Dies beinhaltet die Bereitstellung von FHIR Questionnaires, die Speicherung der zugehörigen Antworten sowie deren Abruf.
 
-3. [Downloader Script](https://github.com/NUMde/compass-numapp-downloader): Diese Komponente dient dem Abruf und der Entschlüsselung eingereichter FHIR Questionnaire Responses.
- 
-All diese Komponenten müssen aufgesetzt werden, um die Verwendung der App in vollem Umfang zu gewährleisten. Dies beinhaltet die Bereitstellung von FHIR Questionnaires, die Speicherung der zugehörigen Antworten sowie deren Abruf. 
-
-Die Dokumentation der oben verlinkten Repositories bieten weitere Informationen bezüglich Einrichtung und Konfiguration. 
+Die Dokumentation der oben verlinkten Repositories bieten weitere Informationen bezüglich Einrichtung und Konfiguration.
 
 Generelle Inhalte (z.B. Verschlüsselung, Forking etc.), welche übergreifend von Relevanz sind, werden in den [Docs](https://github.com/NUMde/compass-numapp/tree/main/docs) erläutert.
 
@@ -127,26 +139,26 @@ Die aufgezeichneten Videos der Enabling Termine sind auf [YouTube](https://www.y
 <p align="center">
     <img src="assets/componentOverview.png" alt="Component Overview" width="600">
 </p>
-## Eine beispielhafte COVID Studie mit der NUM-App
+## Eine beispielhafte COVID-19 Studie mit der NUM-App
 
 Das folgende Beispiel illustriert wie eine digitale (klinische) Studie mit der NUM-App durchgeführt werden kann. Wir betrachten dabei Max, der an der COVID-19 Studie einer Universitätsklinik teilnimmt.
 
 <img src="assets/studyFlow_DE.png" alt="Visualization Study Flow" width="400" align="right">
 
 ### Schritt 1 - Login und der erste Fragebogen
-<div class="block">Max erhält von der Klinik einen personalisierten QR-Code, welchen er für den Login in der NUM-App nutzt. Ihm wird nun ein besonderer Fragebogen präsentiert, da es sein erster Appaufruf ist. Der Fragebogen beinhaltet Fragen, die Max nur einmalig beantworten soll. Max füllt den Fragebogen aus und versendet ihn. Die NUM-App wandelt den Fragebogen in eine FHIR Questionnaire Response um, verschlüsselt diese und sendet sie zur Speicherung an das mobile Backend.</div>
+<div class="block">Max erhält von der Klinik einen personalisierten QR-Code, welchen er für den Login in der NUM-App nutzt. Ihm wird nun ein besonderer Fragebogen präsentiert, da es sein erster Appaufruf ist. Der Fragebogen beinhaltet Fragen, die Max nur einmalig beantworten soll. Max füllt den Fragebogen aus und versendet ihn. Die NUM-App wandelt den Fragebogen in eine FHIR Questionnaire Response um, verschlüsselt diese und sendet sie zur Speicherung an das Backend.</div>
 
 ### Schritt 2 - Abfrage eingereichter Fragebögen
 <div class="block">Das Studienpersonal am Universitätsklinikum möchte überprüfen, ob neue Fragebögen eingereicht wurden. Ein Mitarbeiter führt das Downloader Script aus und erhält die verschlüsselte Questionnaire Response von Max, welche lokal entschlüsselt wird.</div>
 
 ### Schritt 3 - Der Standardfragebogen
-Das Studienpersonal hat die Fragebogen-Frequenz auf sieben Tage festgelegt. Max erhält daher jede Woche einen neuen Fragebogen. Nachdem er einen eingereicht hat, informiert ihn die NUM-App darüber, wann der nächste Fragebogen zu Verfügung steht. Da Max seine App nicht regelmäßig überprüft, schickt ihm die NUM-App eine Push-Nachricht, sobald ein neuer Fragebogen verfügbar ist. Das Studienpersonal die Benachrichtigungszeit auf 10:00 Uhr festgelegt. Daher erhält Max einmal jede Woche zu dieser Zeit eine Benachrichtigung. Max füllt den Fragebogen nicht immer direkt komplett aus, da dieser sehr lang ist. Da die NUM-App seine Zwischenantworten speichert, kann Max den Fragebogen zu jedem späteren Zeitpunkt fertigstellen.
+Das Studienpersonal hat die Fragebogen-Frequenz auf sieben Tage festgelegt. Max erhält daher jede Woche einen neuen Fragebogen. Nachdem er einen eingereicht hat, informiert ihn die NUM-App darüber, wann der nächste Fragebogen zu Verfügung steht. Da Max seine App nicht regelmäßig überprüft, schickt ihm die mobile NUM-App eine Push-Nachricht, sobald ein neuer Fragebogen verfügbar ist. Das Studienpersonal hat die Benachrichtigungszeit auf 10:00 Uhr festgelegt. Daher erhält Max einmal jede Woche zu dieser Zeit eine Benachrichtigung. Max füllt den Fragebogen nicht immer direkt komplett aus, da dieser sehr lang ist. Da die NUM-App seine Zwischenantworten speichert, kann Max den Fragebogen zu jedem späteren Zeitpunkt fertigstellen.
 
 ### Schritt 4 - Besondere Antworten
-Zu einem bestimmten Zeitpunkt beantwortet Max eine Frage des Standardfragebogens mit einem Schlüsselwert. In dieser Studie ist dies die Information, dass Max positiv auf COVID-19 getestet wurde. Dies wird durch die NUM-App erkannt. Nach Absenden des Fragebogens wird das Nutzerprofil von Max automatisch auf Basis vorkonfigurierter Werte aktualisiert. Anstatt des Standardfragebogens erhält er nun einen alternativen Fragebogen. Zudem wird die Fragebogen-Frequenz auf einmal pro Tag angehoben und die Verteildauer für den alternativen Fragebogen wird auf sieben Tage gesetzt. Das bedeutet, dass Max für eine Woche täglich den neuen Fragebogen erhält. Danach werden die Einstellungen auf die Standardwerte zurückgesetzt.
+Zu einem bestimmten Zeitpunkt beantwortet Max eine Frage des Standardfragebogens mit einem _Schlüsselwert_. In dieser Studie ist es die Information, dass Max positiv auf COVID-19 getestet wurde. Dies wird durch die NUM-App erkannt. Nach Absenden des Fragebogens wird das Nutzerprofil von Max automatisch auf Basis vorkonfigurierter Werte aktualisiert. Anstatt des Standardfragebogens erhält er nun einen alternativen Fragebogen. Zudem wird die Fragebogen-Frequenz auf einmal pro Tag angehoben und die Verteildauer für den alternativen Fragebogen wird auf sieben Tage gesetzt. Das bedeutet, dass Max für eine Woche täglich den neuen Fragebogen erhält. Danach werden die Einstellungen auf die Standardwerte zurückgesetzt.
 
 ### Schritt 5 - Einreichen eines Sonderberichts
-Max erhält wieder den Standardfragebogen. Er hat den aktuellsten bereits abgeschickt und muss sechs Tage auf den nächsten warten. Am nächsten Tag bemerkt Max allerdings COVID-19 Symptome und fordert einen Sonderbericht über die App an. Wieder wird sein Nutzerprofil aktualisiert. Max erhält nun einen Spezialfragebogen unabhängig von der üblichen Frequenz und kann seine Symptome direkt über diesen Fragebogen melden. Danach erhält er wieder den Standardfragebogen, da nicht anders konfiguriert. In der Zwischenzeit hat das Studienpersonal jedoch die Fragebogen-Frequenz auf fünf anstatt sieben Tage angehoben. Max erhält den Standardfragebogen daher nun alle fünf Tage.
+Max erhält wieder den Standardfragebogen. Er hat den Aktuellsten bereits abgeschickt und muss sechs Tage auf den Nächsten warten. Am nächsten Tag bemerkt Max allerdings COVID-19 Symptome und fordert einen Sonderbericht über die App an. Wieder wird sein Nutzerprofil aktualisiert. Max erhält nun einen Spezialfragebogen unabhängig von der üblichen Frequenz und kann seine Symptome direkt über diesen Fragebogen melden. Danach erhält er wieder den Standardfragebogen, da nicht anders konfiguriert. In der Zwischenzeit hat das Studienpersonal jedoch die Fragebogen-Frequenz auf fünf anstatt sieben Tage angehoben. Max erhält den Standardfragebogen daher nun alle fünf Tage.
 
 ### Schritt 6 - Abfrage eingereichter Fragebögen
 Es ist eine Weile her, dass das Studienpersonal die eingereichten Fragebögen abgerufen hat. Sie führen das Downloader Script aus und erhalten alle von Max versendeten Antworten seit der letzten Abfrage. Sie erhalten außerdem einen Eintrag zum Sonderbericht, den Max angefordert hat. Die entschlüsselten Antworten können nun je nach Anforderung verarbeitet werden.
@@ -159,7 +171,16 @@ Gewinne einen Eindruck von unserer Arbeit und schau dir unsere Videos im [COMPAS
 
 ### Lizenz
 
-Alle NUM-App Komponenten stehen unter der Apache 2.0 Lizenz.
+Die NUM-App Komponenten stehen unter der Apache 2.0 und MIT Lizenz:
+
+Apache 2.0
+- [Mobile Frontend](https://github.com/NUMde/compass-numapp-frontend)
+- [Mobile & Web Backend (+ Database)](https://github.com/NUMde/compass-numapp-backend)
+- [Downloader Script](https://github.com/NUMde/compass-numapp-downloader)
+
+MIT
+- [Web Frontend](https://github.com/NUMde/compass-numapp-web)
+- [Konformitätsprüfer](https://github.com/NUMde/compass-num-conformance-checker)
 
 ### Verhaltenskodex
 
