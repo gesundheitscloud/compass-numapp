@@ -113,6 +113,7 @@ Die NUM-App unterstützt den internationalen Standard Fast Healthcare Interopera
 
 ## So funktioniert die NUM-App
 
+
 Die NUM-App ermöglicht eine einfache und digitale Durchführung von Studien auf Basis von Fragebögen. Studienteilnehmende können Fragebögen direkt auf ihrem Mobilgerät oder im Browser ausfüllen und absenden. 
 
 Studienverantwortliche können eingereichte Antworten einfach abrufen und Fragebögen aktualisieren, ohne dass Studienteilnehmende die mobile App neu installieren oder aktualisieren müssen. Antworten aus den Fragebögen werden mit Ende-zu-Ende-Verschlüsselung an die empfangende Institution übermittelt, wodurch die NUM-App auch für medizinische Studien geeignet ist. Die App ist flexibel personalisierbar und kann für eigene Anforderungen angepasst werden.
